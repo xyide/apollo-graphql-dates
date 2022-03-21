@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+
+  web:
+    container_name: apollo-graphql-dates-web
+    image: apollo-graphql-dates-web
+    build:
+      context: web
+      dockerfile: Dockerfile
+    volumes:
+      - './web:/app'
+    ports:
+      - 3000:3000
+    networks:
+      - apollo-graphql-dates-network
+    environment:
+      CHOKIDAR_USEPOLLING: 'true'
+      CI: 'true'
+    
+  api:
+    container_name: apollo-graphql-dates-api
+    image: apollo-graphql-dates-api
+    build:
+      context: api
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    volumes:
+      - './api:/app'
+    networks:
+      - apollo-graphql-dates-network
+    
+networks:
+  apollo-graphql-dates-network:
+    name: apollo-graphql-dates-network
